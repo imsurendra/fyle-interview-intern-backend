@@ -83,7 +83,7 @@ class Assignment(db.Model):
         assertions.assert_valid(assignment.teacher_id == principal.teacher_id, 'This assignment belongs to some other teacher')
         possibleGrades = [GradeEnum.A, GradeEnum.B, GradeEnum.C, GradeEnum.D]
         for curGrade in possibleGrades:
-            assertions.assert_valid(grade == curGrade, 'Grade can only be given from available grades')
+            assertions.assert_validation(grade == curGrade, 'Grade can only be given from available grades', 'GradeEnum')
 
         assignment.grade = grade
         assignment.state = AssignmentStateEnum.GRADED
