@@ -82,8 +82,11 @@ class Assignment(db.Model):
                                                                 'Only a submitted assignment can be graded')
         assertions.assert_valid(assignment.teacher_id == principal.teacher_id, 'This assignment belongs to some other teacher')
         possibleGrades = [GradeEnum.A, GradeEnum.B, GradeEnum.C, GradeEnum.D]
+        validGrade = False
         for curGrade in possibleGrades:
-            assertions.assert_validation(grade == curGrade, 'Grade can only be given from available grades', 'GradeEnum')
+            validGrade|=(grade == curGrade)
+            
+        assertions.assert_validation(validGrade, 'Grade can only be given from available grades', 'GradeEnum')
 
         assignment.grade = grade
         assignment.state = AssignmentStateEnum.GRADED
